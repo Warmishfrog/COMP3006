@@ -28,57 +28,9 @@ const Home = () => {
   return (
     <div className='p-4'>
       <div className='flex justify-between items-center'>
-        <h1 className='text-3xl my-8 font-bold'>Rooms</h1>
-        <Link to='/rooms/create' className='flex items-center px-4 py-2 rounded-md bg-blue-500 text-white'>
-          <MdOutlineAddBox className='text-sky-800 text-4x1' /> Create Room
-        </Link>
+        <h1 className='text-3xl my-8 font-bold'>Home</h1>        
       </div>
-      {loading ? (<Spinner />) : 
-      (
-        <table className='w-full border-separate border-spacing-2'>
-          <thead>
-            <tr>
-              <th className='border border-slate-600 rounded-md'>Number</th>
-              <th className='border border-slate-600 rounded-md'>Name</th>
-              <th className='border border-slate-600 rounded-md max-md:hidden'>Price (£)</th>
-              <th className='border border-slate-600 rounded-md max-md:hidden'>Capacity</th>
-              <th className='border border-slate-600 rounded-md'>Operations</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rooms.map((room, index) => (
-              <tr key={room._id} className='h-8'>
-                <td className='border border-slate-700 rounded-md text-center'>
-                  {index + 1}
-                </td>
-                <td className='border border-slate-700 rounded-md text-center'>
-                  {room.name}
-                </td>
-                <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
-                  {room.price}
-                </td>
-                <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
-                  {room.capacity}
-                </td>
-                <td className='border border-slate-700 rounded-md text-center'>
-                  <div className='flex justify-center gap-x-4'>
-                    <Link to={`/rooms/details/${room._id}`}>
-                      <BsInfoCircle className='text-green-800 text-2xl' />                      
-                    </Link>
-                    <Link to={`/rooms/edit/${room._id}`}>
-                      <AiOutlineEdit className='text-yellow-600 text-2xl' />                      
-                    </Link>
-                    <Link to={`/rooms/delete/${room._id}`}>
-                      <MdOutlineDelete className='text-red-600 text-2xl' />
-                      </Link>
-                  </div>
-                </td>
-              </tr>
-              ))}
-          </tbody>
-
-        </table>
-      )}
+      
       <Link to={`/`}>
         <button className='p-2 bg-sky-300 flex-1 mr-2'>
           Logout
@@ -94,6 +46,17 @@ const Home = () => {
           Book Room
         </button>
       </Link>
+      <Link to={`/rooms/book/amend`}>
+        <button className='p-2 bg-sky-300 flex-1 mr-2'>
+          Amend Booking
+        </button>
+      </Link>
+      <Link to={`/rooms/manage`}>
+        <button className='p-2 bg-sky-300 flex-1 mr-2'>
+          Manage Rooms
+        </button>
+      </Link>
+      
     </div>
     
   )

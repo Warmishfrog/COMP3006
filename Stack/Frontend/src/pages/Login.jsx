@@ -72,7 +72,7 @@ const Login = () => {
                     <button onClick={handleLogin} className='p-2 bg-sky-300 flex-1 mr-2'>
                         Login
                     </button>
-                    <Link to={`/account/create`} className='p-2 bg-sky-300 flex-1 ml-2'>
+                    <Link to={{ pathname: `/account/create`, state: {  id: account[0] ? account[0].id : null } }} className='p-2 bg-sky-300 flex-1 ml-2'>
                         <button>Create Account</button>
                     </Link>
                 </div>
