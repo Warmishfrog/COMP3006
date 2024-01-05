@@ -1,9 +1,0 @@
-<p class="heading departs">Time</p>
-<p class="heading destination">Destination</p>
-<p class="heading platform">Platform</p>
-<div *ngFor="let train of trains ">
-<app-train
-[destination]="train.stops[train.stops.length-1].name"
-[departs]="train.departs"
-[platform]="train.platform"></app-train>
-</div>
