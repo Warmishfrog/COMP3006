@@ -2,6 +2,7 @@ import express from "express";
 import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import roomRouter from "./Routes/roomRoutes.js";
+import accountRouter from "./Routes/accountRoutes.js";
 import cors from "cors";
 
 const app = express();
@@ -27,6 +28,7 @@ app.get("/", (request, response) => {
 });
 
 app.use("/rooms", roomRouter);
+app.use("/accounts", accountRouter);
 
 mongoose
     .connect(mongoDBURL)

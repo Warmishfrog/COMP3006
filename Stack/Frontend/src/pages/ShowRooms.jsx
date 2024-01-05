@@ -34,16 +34,16 @@ const ShowRooms = () => {
             <span>{room._id}</span>
           </div>
           <div className='my-4'>
-            <span className='text-x1 mr-4 text-gray-500'>Title</span>
-            <span>{room.title}</span>
+            <span className='text-x1 mr-4 text-gray-500'>Name</span>
+            <span>{room.name}</span>
           </div>
           <div className='my-4'>
-            <span className='text-x1 mr-4 text-gray-500'>Author</span>
-            <span>{room.author}</span>
+            <span className='text-x1 mr-4 text-gray-500'>Price (£)</span>
+            <span>{room.price}</span>
           </div>
           <div className='my-4'>
-            <span className='text-x1 mr-4 text-gray-500'>Size</span>
-            <span>{room.size}</span>
+            <span className='text-x1 mr-4 text-gray-500'>Capacity</span>
+            <span>{room.capacity}</span>
           </div>
         </div>
         )}

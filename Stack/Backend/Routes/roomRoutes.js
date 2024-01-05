@@ -9,17 +9,17 @@ router.post('/', async (request, response) => {
     {
         if 
         (
-            !request.body.title ||
-            !request.body.author ||
-            !request.body.size
+            !request.body.name ||
+            !request.body.price ||
+            !request.body.capacity
         ) 
         {
-            return response.status(400).send({message: "Send all required fields: title, author, size"});
+            return response.status(400).send({message: "Send all required fields: name, price, capacity"});
         }
          const newRoom = { 
-            title: request.body.title,
-            author: request.body.author, 
-            size: request.body.size, 
+            name: request.body.name,
+            price: request.body.price, 
+            capacity: request.body.capacity, 
         }; 
         const room = await Room.create(newRoom);
         return response.status(201).send(room);
@@ -70,12 +70,12 @@ router.put('/:id', async (request, response) => {
     {
         if 
         (
-            !request.body.title || 
-            !request.body.author ||
-            !request.body.size
+            !request.body.name || 
+            !request.body.price ||
+            !request.body.capacity
         ) 
         {
-            return response.status(400).send({message: "Send all required fields: title, author, size"});
+            return response.status(400).send({message: "Send all required fields: name, price, capacity"});
         }
         const {id} = request.params;
         const result = await Room.findByIdAndUpdate(id, request.body);

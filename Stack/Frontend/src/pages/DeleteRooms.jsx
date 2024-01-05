@@ -13,7 +13,7 @@ const DeleteRooms = () => {
     axios.delete(`http://localhost:5555/rooms/${id}`)
       .then(response => {
         setLoading(false);
-        navigate('/');
+        navigate('/home');
       })
       .catch(error => {
         console.log(error);

@@ -2,15 +2,15 @@ import mongoose from "mongoose";
 
 const roomSchema = new mongoose.Schema(
     {
-        title: {
+        name: {
             type: String,
             required: true,
         },
-        author: {
-            type: String,
+        price: {
+            type: Number,
             required: true
         },
-        size: {
+        capacity: {
             type: Number,
             required: true
         },
