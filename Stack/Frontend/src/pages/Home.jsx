@@ -7,7 +7,6 @@ const Home = () => {
   const [account, setAccount] = useState([]);
   const [loading, setLoading] = useState(false);
   const [bookings, setBookings] = useState([]);
-  const [rooms, setRooms] = useState([]);
   const [message, setMessage] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -70,18 +69,13 @@ const Home = () => {
       setChatLog((prevChatLog) => [...prevChatLog, event.data]);
     });
 
-    // Send a message
-    const sendMessage = (message) => {
-      webSocket.send(message);
-    };
-
-    // Close the connection
-    const closeConnection = () => {
-      webSocket.close();
-    };
-
     // Save the socket instance
     setSocket(webSocket);
+
+    // Clean up the WebSocket connection
+    return () => {
+      webSocket.close();
+    };
   }, []);
 
   const handleSendMessage = () => {
@@ -91,7 +85,6 @@ const Home = () => {
       setMessage('');
     }
   };
-  
 
   return (
     <div className='p-4'>
@@ -102,7 +95,7 @@ const Home = () => {
         <p>Logged in as: {account.username}</p>
       </div>
 
-      <div> // Display all rooms
+      <div id="DisplayBookings">
         <h2 className='text-2xl my-4 font-bold'>Your Bookings</h2>
         {loading ? (
           <Spinner />
@@ -143,7 +136,7 @@ const Home = () => {
         )}
       </div>
 
-      <div> //Button control
+      <div id="DisplayButtons"> 
         <Link to={`/`}>
           <button className='p-2 bg-sky-300 flex-1 mr-2' onClick={handleLogout}>
             Logout
@@ -160,26 +153,28 @@ const Home = () => {
         </Link>
       </div>
 
-      <div className='flex flex-col min-h-screen'>
-        <div className='flex-grow w-1/2'>
-          <p>Contact Customer Support</p>
-          <input
-            type='text'
-            placeholder='Enter your message here'
-            className='border border-gray-300 rounded-md px-2 py-1 mr-2'
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button className='bg-blue-500 text-white px-4 py-2 rounded-md' onClick={handleSendMessage}>
-            Send
-          </button>
-          <div className='border border-gray-300 rounded-md overflow-auto' style={{ maxHeight: '200px' }}>
-            <p className='px-2 py-1 mr-2 w-full'>ChatLog</p>
-            {chatLog.map((message, index) => (
-              <p key={index} className='px-2 py-1 mr-2 w-full'>
-                {message}
-              </p>
-            ))}
+      <div id="DisplayChat">
+        <div className='flex flex-col min-h-screen'>
+          <div className='flex-grow w-1/2'>
+            <p><strong>Contact</strong></p>
+            <input
+              type='text'
+              placeholder='Enter your message here'
+              className='border border-gray-300 rounded-md px-2 py-1 mr-2'
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button className='bg-blue-500 text-white px-4 py-2 rounded-md' onClick={handleSendMessage}>
+              Send
+            </button>
+            <div className='border border-gray-300 rounded-md overflow-auto' style={{ maxHeight: '200px' }}>
+              <p className='px-2 py-1 mr-2 w-full'>ChatLog</p>
+              {chatLog.map((message, index) => (
+                <p key={index} className='px-2 py-1 mr-2 w-full'>
+                  {message}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
       </div>
