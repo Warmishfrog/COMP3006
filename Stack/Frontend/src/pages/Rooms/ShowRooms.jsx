@@ -1,8 +1,8 @@
 import React, {useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import BackButton from '../components/BackButton';
-import Spinner from '../components/Spinner';
+import BackButton from '../../components/BackButton';
+import Spinner from '../../components/Spinner';
 
 const ShowRooms = () => {
   const [room, setRoom] = useState({});
@@ -23,7 +23,7 @@ const ShowRooms = () => {
   }, []);
   return (
     <div className='p-4'>
-      <BackButton />
+      <BackButton destination='/rooms/manage' />
       <h1 className='text-3x1 my-4'>Show Room</h1>
       {loading ? (
         <Spinner />

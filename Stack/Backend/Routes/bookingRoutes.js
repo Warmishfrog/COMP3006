@@ -11,16 +11,16 @@ router.post('/', async (request, response) => {
             !request.body.RoomID ||
             !request.body.NumGuests ||
             !request.body.CheckInDate ||
-            !request.body.CheckOutDate
+            !request.body.NumNights
         ) {
-            return response.status(400).send({ message: "Send all required fields: userID, RoomID, NumGuests, CheckInDate, CheckOutDate" });
+            return response.status(400).send({ message: "Send all required fields: userID, RoomID, NumGuests, CheckInDate, NumNights" });
         }
         const newBooking = {
             UserID: request.body.UserID,
             RoomID: request.body.RoomID,
             NumGuests: request.body.NumGuests,
             CheckInDate: request.body.CheckInDate,
-            CheckOutDate: request.body.CheckOutDate,
+            NumNights: request.body.NumNights,
         };
         const booking = await Booking.create(newBooking);
         return response.status(201).send(booking);
@@ -30,13 +30,27 @@ router.post('/', async (request, response) => {
     }
 });
 
-// GET single
-router.get('/:id', async (request, response) => {
+// GET single by id
+router.get('/id/:id', async (request, response) => {
     try {
         const { id } = request.params;
 
         const booking = await Booking.findById(id);
         return response.status(200).json(booking);
+
+    } catch (error) {
+        console.log(error.message);
+        response.status(500).send({ message: error.message });
+    }
+});
+
+// GET single by userID
+router.get('/userid/:UserID', async (request, response) => {
+    try {
+        const { UserID } = request.params;
+
+        const bookings = await Booking.find({ UserID });
+        return response.status(200).json(bookings);
 
     } catch (error) {
         console.log(error.message);
@@ -62,13 +76,13 @@ router.get('/', async (request, response) => {
 router.put('/:id', async (request, response) => {
     try {
         if (
-            !request.body.userID ||
+            !request.body.UserID ||
             !request.body.RoomID ||
             !request.body.NumGuests ||
             !request.body.CheckInDate ||
-            !request.body.CheckOutDate
+            !request.body.NumNights
         ) {
-            return response.status(400).send({ message: "Send all required fields: userID, RoomID, NumGuests, CheckInDate, CheckOutDate" });
+            return response.status(400).send({ message: "Send all required fields: userID, RoomID, NumGuests, CheckInDate, NumNights" });
         }
         const { id } = request.params;
         const result = await Booking.findByIdAndUpdate(id, request.body);

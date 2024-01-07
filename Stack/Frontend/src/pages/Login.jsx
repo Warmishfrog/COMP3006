@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from '../components/Spinner.jsx';
-import { Link } from 'react-router-dom';
-import {useNavigate, useParams } from 'react-router-dom';
+import {useNavigate, useParams, Link } from 'react-router-dom';
 
 const Login = () => {
     const [account, setAccount] = useState([])
@@ -26,19 +25,25 @@ const Login = () => {
     };
 
     const handleLogin = () => {
-        searchAccountByUsername(inUsername)
-            .then(account => {
-                if (account.length > 0 && account[0].username === inUsername && account[0].password === inPassword) {
-                    console.log('Login successful');
-                    navigate('/home');
-                } else {
+        if (inUsername) {
+            searchAccountByUsername(inUsername)
+                .then(account => {
+                    if (account.length > 0 && account[0].username === inUsername && account[0].password === inPassword) {
+                        console.log('Login successful as:' + account[0]._id);
+                        localStorage.setItem('user', JSON.stringify(account[0]));
+                        navigate('/home');
+                    } else {
+                        setLoginError(true);
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
                     setLoginError(true);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                setLoginError(true);
-            });
+                });
+        }
+        else{
+            setLoginError(true);
+        }
     };
 
     useEffect(() => {
@@ -72,7 +77,7 @@ const Login = () => {
                     <button onClick={handleLogin} className='p-2 bg-sky-300 flex-1 mr-2'>
                         Login
                     </button>
-                    <Link to={{ pathname: `/account/create`, state: {  id: account[0] ? account[0].id : null } }} className='p-2 bg-sky-300 flex-1 ml-2'>
+                    <Link to={{ pathname: `/account/create`}} className='p-2 bg-sky-300 flex-1 ml-2'>
                         <button>Create Account</button>
                     </Link>
                 </div>

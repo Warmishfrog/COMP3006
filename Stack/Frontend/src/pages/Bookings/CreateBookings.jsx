@@ -1,41 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import BackButton from '../components/BackButton.jsx';
-import Spinner from '../components/Spinner.jsx';
-import { Link } from 'react-router-dom';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { BsInfoCircle } from 'react-icons/bs';
-import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
-import { set } from 'mongoose';
+import BackButton from '../../components/BackButton.jsx';
+import Spinner from '../../components/Spinner.jsx';
+import { Link, useNavigate } from 'react-router-dom';
 
 const BookRoomDetails = () => {
+  
+  const currentDate = new Date().toISOString().split('T')[0];
   const [rooms, setRooms] = useState([])
   const [loading, setLoading] = useState(false)
-  const [numGuests, setNumGuests] = useState('');
-  const [checkInDate, setCheckInDate] = useState('');
-  const [checkOutDate, setCheckOutDate] = useState('');
+  const [NumGuests, setNumGuests] = useState('');
+  const [CheckInDate, setCheckInDate] = useState(currentDate);
+  const [NumNights, setNumNights] = useState('');
+  const navigate = useNavigate();
+  
+  
 
-  useEffect(() => {
-    setLoading(true);
-    axios.get('http://localhost:5555/rooms')
-      .then(response => {
-        setRooms(response.data.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.log(error);
-        setLoading(false);
-      })
+  const chosenRoom = JSON.parse(localStorage.getItem('room'));
+  const RoomID = chosenRoom._id;  
+  const UserID = JSON.parse(localStorage.getItem('user'))._id;
 
-  }, []);
   const handleSaveBooking = () => {
-    console.log("go to save ")
+    console.log("go to save ") 
+
     const data = {
-      userID,
-      roomID,
-      numGuests,
-      checkInDate,
-      checkOutDate,
+      UserID,
+      RoomID,
+      NumGuests,
+      CheckInDate,
+      NumNights,
     };
     console.log(data);
     setLoading(true);
@@ -69,22 +62,20 @@ const BookRoomDetails = () => {
                 </tr>
               </thead>
               <tbody>
-                {rooms.map((room, index) => (
-                  <tr key={room._id} className='h-8'>
-
+                {chosenRoom && (
+                  <tr className='h-8'>
                     <td className='border border-slate-700 rounded-md text-center'>
-                      {room.name}
+                      {chosenRoom.name}
                     </td>
                     <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
-                      {room.price}
+                      {chosenRoom.price}
                     </td>
                     <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
-                      {room.capacity}
+                      {chosenRoom.capacity}
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
-
             </table>
           )}
         <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
@@ -93,37 +84,36 @@ const BookRoomDetails = () => {
             <input
               type='number'
               className='border-2 border-gray-500 px-4 py-2 w-full'
-              value={numGuests}
+              value={NumGuests}
               onChange={e => setNumGuests(e.target.value)}
               placeholder='Enter the number of guests'
             />
           </div>
+
           <div className='my-4'>
             <label className='text-xl mr-4 text-gray-500'>Check-in Date</label>
             <input
               type='date'
               className='border-2 border-gray-500 px-4 py-2 w-full'
-              value={checkInDate}
+              value={CheckInDate || currentDate}
               onChange={e => setCheckInDate(e.target.value)}
               placeholder='Select check-in date'
             />
           </div>
           <div className='my-4'>
-            <label className='text-xl mr-4 text-gray-500'>Check-out Date</label>
+            <label className='text-xl mr-4 text-gray-500'>Number of Nights</label>
             <input
-              type='date'
+              type='number'
               className='border-2 border-gray-500 px-4 py-2 w-full'
-              value={checkOutDate}
-              onChange={e => setCheckOutDate(e.target.value)}
-              placeholder='Select check-out date'
+              value={NumNights}
+              onChange={e => setNumNights(e.target.value)}
+              placeholder='Enter the number of nights'
             />
           </div>
           <div className='flex justify-between'>
-            <Link to={`/`} className='p-2 bg-sky-300 flex-1 mr-2 text-center'>
-              <button onClick={handleSaveBooking}>
+              <button className='p-2 bg-sky-300 flex-1 mr-2 text-center' onClick={handleSaveBooking}>
                 Confirm Booking
               </button>
-            </Link>
           </div>
         </div>
       </div>

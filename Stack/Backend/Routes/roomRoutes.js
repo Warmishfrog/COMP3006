@@ -31,7 +31,7 @@ router.post('/', async (request, response) => {
     }
 });
 
-// GET single
+// GET single by id
 router.get('/:id', async (request, response) => {
     try
     {
@@ -47,6 +47,7 @@ router.get('/:id', async (request, response) => {
         response.status(500).send({message: error.message});
     }
 });
+
 //GET all 
 router.get('/', async (request, response) => {
     try

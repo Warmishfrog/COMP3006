@@ -18,8 +18,8 @@ const bookingSchema = new mongoose.Schema(
             type: Date,
             required: true
         },
-        CheckOutDate: {
-            type: Date,
+        NumNights: {
+            type: Number,
             required: true
         }
     },

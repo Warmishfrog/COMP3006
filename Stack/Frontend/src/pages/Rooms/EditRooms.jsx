@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import BackButton from '../components/BackButton';
-import Spinner from '../components/Spinner';
+import BackButton from '../../components/BackButton';
+import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -50,7 +50,7 @@ const EditRooms = () => {
 
   return (
     <div className='p-4'>
-      <BackButton />
+      <BackButton destination='/rooms/manage'/>
       <h1 className='text-3xl font-bold my-8'>Edit Room</h1>
       {loading ? <Spinner /> : ''}
       <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
