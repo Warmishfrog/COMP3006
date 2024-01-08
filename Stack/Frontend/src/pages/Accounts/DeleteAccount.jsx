@@ -14,7 +14,7 @@ const DeleteAccount = () => {
 
   const handleDeleteAccount = () => {
     setLoading(true);
-    axios.delete(`http://localhost:5555/accounts/${accountId}`)
+    axios.delete(`http://localhost:5555/accounts/id/${accountId}`)
       .then(response => {
         setLoading(false);
         localStorage.removeItem('user'); //delete user from local storage

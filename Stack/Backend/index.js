@@ -24,7 +24,7 @@ app.use(cors({
 }));
 */
 
-//uni test
+//test that the server responds to a GET request
 app.get("/", (request, response) => {
     console.log(request);
     return response.status(234).send("Hello World from Express!")
